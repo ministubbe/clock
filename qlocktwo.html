@@ -14,25 +14,30 @@ html {
 margin: 0;
 border: 0;
 }
-
 #clockbox {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
-
-#clocktxt {
+.clocktxt {
+font-family: 'Nova Mono', monospace;
+font-size: xx-large;
+color: #333333;
+font-weight: bold;
+}
+.clocktxt2 {
 font-family: 'Nova Mono', monospace;
 font-size: xx-large;
 color: white;
+font-weight: bold;
 }
 </style>
 
 <body>
 
 <script type="text/javascript">
-	function launchIntoFullscreen(element) {
+function launchIntoFullscreen(element) {
   if(element.requestFullscreen) {
     element.requestFullscreen();
   } else if(element.mozRequestFullScreen) {
@@ -43,83 +48,100 @@ color: white;
     element.msRequestFullscreen();
   }
 }
-	
-function space(len) {
-	var s="";
-	for (var i = 0; i < len; i++) {
-		s=s+" ";
-	}
-	return s;
+
+var alltext = "ESKISTAFÜNF"
+               +"ZEHNZWANZIG"
+               +"DREIVIERTEL"
+               +"VORFUNKNACH"
+               +"HALBAELFÜNF"
+               +"EINSXAMZWEI"
+               +"DREIPMJVIER"
+               +"SECHSNLACHT"
+               +"SIEBENZWÖLF"
+               +"ZEHNEUNKUHR";
+              
+var minutes1 = ["-", 
+               "FÜNF", "ZEHN", "VIERTEL", "ZWANZIG", 
+               "ZEHN", "FÜNF",
+               "-", 
+               "ZWANZIG", "VIERTEL", "ZEHN", "FÜNF", 
+               "-"];
+var minutes2 = ["-", 
+               "NACH", "NACH", "NACH", "NACH", 
+               "VOR", "VOR",
+               "-", 
+               "VOR", "VOR", "VOR", "VOR", 
+               "-"]; 
+               
+var minutes3 = ["-", 
+               "-", "-", "-", "-", 
+               "HALB", "HALB",
+               "HALB", 
+               "-", "-", "-", "-", 
+               "-"];
+               
+var hours = ["ZWÖLF","EINS","ZWEI","DREI","VIER","FÜNF","SECHS","SIEBEN","ACHT","NEUN","ZEHN","ELF","ZWÖLF"];       
+    
+function  highlight(s) {
+  var start = alltext.indexOf(s);
+  if (start == -1) return;
+  for (var i = start; i < start + s.length; i++) {
+  	$("#x" + i).toggleClass('clocktxt clocktxt2');
+    console.log(i);
+  }
+}
+
+function  highlight2(s) {
+  var start = alltext.lastIndexOf(s);
+  if (start == -1) return;
+  for (var i = start; i < start + s.length; i++) {
+  	$("#x" + i).toggleClass('clocktxt clocktxt2');
+  }
 }
 
 function drawclock(){
-var t="";
-var mi="";
-var b="";
-var d = new Date();
-var h = d.getHours();
-var m=d.getMinutes();
-var ms=["",
-"eis","zwei","drüü","vier","foif","sächs","sibä","acht","nüün","zää","elf","zwölf","drizää","vierzää","viertel","sächzää","sibzää","achtzää","nünzää","zwänzg"];
-
-if (m==0){
- //nothing
- t="punkt";
-}else if (m <= 20){
- t=ms[m];
- mi="ab";
-}else if (m==30){
- b="halbi ";
-} else if (m <= 30) {
-	h=h+1;
-	t=ms[30-m];
-	mi="vor";
-	b="halbi ";
-}else if (m <40) {
-	h=h+1;
-	t=ms[m-30];
-	mi="ab";
-	b="halbi ";
-}else {
-	h=h+1;
-	t=ms[60-m];
-	mi="vor";
-}
-
-var hs=["zwölfi",
-"eis",
-"zwei",
-"drüü",
-"vieri",
-"foifi",
-"sächsi",
-"sibni",
-"achti",
-"nüüni",
-"zäni",
-"elfi"
-];
-b=b+hs[h % 12];
-var mispace=space(2+t.length-mi.length);
-mi=mispace+mi;
-b=mispace+b;
-msg=t+"\n\n"+mi+"\n\n"+b;
- $("#clocktxt").text(msg);
+  var h = "<table>"; 
+  for (var row = 0; row < 10; row++) {
+    h += "<tr>";
+    for (var col = 0; col < 11; col++) {
+    	h += "<td id='x"+(row*11+col)+"' class='clocktxt'>&nbsp;"+alltext.substring(row*11+col, row*11+col+1)+"</td>";
+    }
+    h += "</tr>";
+  }
+  h += "</table>";
+	$("#clockbox").html(h);
+  
+  highlight("ES");
+  highlight("IST");
+  
+  var d = new Date();
+  var hh = d.getHours();
+  var mm =d.getMinutes();
+  
+  m = Math.trunc(mm/5);
+  h = hh % 12;
+  
+  if (m > 4) {
+    h = h + 1;
+  }
+  
+  highlight(minutes1[m]);
+  highlight(minutes2[m]);
+  highlight(minutes3[m]);
+  
+  highlight2(hours[h]);
 }
 
 $(document).ready(function(){
- $("#clockbox").click(function(){
-	launchIntoFullscreen(document.documentElement);
- });
-  drawclock();
-  window.setInterval(drawclock, 15000)
+  $("#clockbox").click(function(){
+	  launchIntoFullscreen(document.documentElement);
+  });
+	drawclock();
 });
 </script>
 
 
 <div id="clockbox">
-<pre id="clocktxt">
-</pre>
 </div>
 
 </body>
