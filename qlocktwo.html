@@ -3,7 +3,7 @@
 <title>Clock</title>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script type="text/javascript" src="nosleep.js"></script>
+<!-- <script type="text/javascript" src="nosleep.js"></script> -->
 
 <link href="https://fonts.googleapis.com/css?family=Nova+Mono" rel="stylesheet">
 
@@ -40,9 +40,9 @@ font-weight: bold;
 <script type="text/javascript">
 var noSleep = new NoSleep();
 
-function enableNoSleep() {
+/* function enableNoSleep() {
   noSleep.enable(); //no effect on win phone :(
-}
+} */
 </script>
 	
 <script type="text/javascript">
@@ -160,9 +160,9 @@ function drawclock(){
 $(document).ready(function(){
   $("#clockbox").click(function(){
 	  launchIntoFullscreen(document.documentElement);
-	  enableNoSleep();
+	  //enableNoSleep();
   });
-	drawclock();
+  drawclock();
   setInterval(drawclock, 15000);
 });
 </script>
