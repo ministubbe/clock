@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>Clock</title>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css?family=Nova+Mono" rel="stylesheet">
+
+</head>
+
+<style>
+html {
+  background-color: #000000; 
+margin: 0;
+border: 0;
+}
+
+#clockbox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+#clocktxt {
+font-family: 'Nova Mono', monospace;
+font-size: xx-large;
+color: white;
+}
+</style>
+
+<body>
+
+<script type="text/javascript">
+	function launchIntoFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+	
+function space(len) {
+	var s="";
+	for (var i = 0; i < len; i++) {
+		s=s+" ";
+	}
+	return s;
+}
+
+function drawclock(){
+var t="";
+var mi="";
+var b="";
+var d = new Date();
+var h = d.getHours();
+var m=d.getMinutes();
+var ms=["",
+"eis","zwei","drüü","vier","foif","sächs","sibä","acht","nüün","zää","elf","zwölf","drizää","vierzää","viertel","sächzää","sibzää","achtzää","nünzää","zwänzg"];
+
+if (m==0){
+ //nothing
+ t="punkt";
+}else if (m <= 20){
+ t=ms[m];
+ mi="ab";
+}else if (m==30){
+ b="halbi ";
+} else if (m <= 30) {
+	h=h+1;
+	t=ms[30-m];
+	mi="vor";
+	b="halbi ";
+}else if (m <40) {
+	h=h+1;
+	t=ms[m-30];
+	mi="ab";
+	b="halbi ";
+}else {
+	h=h+1;
+	t=ms[60-m];
+	mi="vor";
+}
+
+var hs=["zwölfi",
+"eis",
+"zwei",
+"drüü",
+"vieri",
+"foifi",
+"sächsi",
+"sibni",
+"achti",
+"nüüni",
+"zäni",
+"elfi"
+];
+b=b+hs[h % 12];
+var mispace=space(2+t.length-mi.length);
+mi=mispace+mi;
+b=mispace+b;
+msg=t+"\n\n"+mi+"\n\n"+b;
+ $("#clocktxt").text(msg);
+}
+
+$(document).ready(function(){
+ $("#clockbox").click(function(){
+	launchIntoFullscreen(document.documentElement);
+ });
+  drawclock();
+  window.setInterval(drawclock, 15000)
+});
+</script>
+
+
+<div id="clockbox">
+<pre id="clocktxt">
+</pre>
+</div>
+
+</body>
+</html>
