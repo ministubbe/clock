@@ -96,6 +96,10 @@ msg=t+"\n\n"+mi+"\n\n"+b;
 }
 
 $(document).ready(function(){
+	var elem = document.getElementById("clockbox");
+if (elem.requestFullscreen) {
+  elem.requestFullscreen();
+}
   drawclock();
   window.setInterval(drawclock, 15000)
 });
