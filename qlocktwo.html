@@ -41,8 +41,7 @@ font-weight: bold;
 var noSleep = new NoSleep();
 
 function enableNoSleep() {
-  noSleep.enable();
-  document.removeEventListener('click', enableNoSleep, false);
+  noSleep.enable(); //no effect on win phone :(
 }
 </script>
 	
