@@ -108,7 +108,9 @@ msg=t+"\n\n"+mi+"\n\n"+b;
 }
 
 $(document).ready(function(){
+ $("#clockbox").click(function(){
 	launchIntoFullscreen(document.documentElement);
+ });
   drawclock();
   window.setInterval(drawclock, 15000)
 });
