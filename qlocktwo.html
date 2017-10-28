@@ -85,22 +85,26 @@ var hours = ["ZWÖLF","EINS","ZWEI","DREI","VIER","FÜNF","SECHS","SIEBEN","ACHT
 function  highlight(s) {
   var start = alltext.indexOf(s);
   if (start == -1) return;
+  //console.log(s);
   for (var i = start; i < start + s.length; i++) {
   	$("#x" + i).toggleClass('clocktxt clocktxt2');
-    console.log(i);
   }
 }
 
 function  highlight2(s) {
   var start = alltext.lastIndexOf(s);
   if (start == -1) return;
+  //console.log(s);
   for (var i = start; i < start + s.length; i++) {
   	$("#x" + i).toggleClass('clocktxt clocktxt2');
   }
 }
 
 function drawclock(){
-  var h = "<table>"; 
+  var h = "<table>";
+  h += "<tr><td id='d1' class='clocktxt'>.</td><td>&nbsp;</td><td id='d2' class='clocktxt'>&nbsp;.</td></tr>";
+  h += "<tr><td>&nbsp;</td>";
+  h += "<td><table>"; 
   for (var row = 0; row < 10; row++) {
     h += "<tr>";
     for (var col = 0; col < 11; col++) {
@@ -108,6 +112,9 @@ function drawclock(){
     }
     h += "</tr>";
   }
+  h += "</table></td>";
+  h += "<td>&nbsp;</td></tr>";
+  h += "<tr><td id='d3' class='clocktxt'>.</td><td>&nbsp;</td><td id='d4' class='clocktxt'>&nbsp;.</td></tr>";
   h += "</table>";
 	$("#clockbox").html(h);
   
@@ -130,6 +137,15 @@ function drawclock(){
   highlight(minutes3[m]);
   
   highlight2(hours[h]);
+  
+  if (m == 0) {
+  	highlight2("UHR");
+  }
+  
+  var m2 = mm % 5;
+  if (m2 > 0) {
+    $("#d" + m2).toggleClass('clocktxt clocktxt2');
+  }
 }
 
 $(document).ready(function(){
@@ -137,6 +153,7 @@ $(document).ready(function(){
 	  launchIntoFullscreen(document.documentElement);
   });
 	drawclock();
+  setInterval(drawclock, 15000);
 });
 </script>
 
