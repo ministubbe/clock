@@ -3,7 +3,6 @@
 <title>Clock</title>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<!-- <script type="text/javascript" src="nosleep.js"></script> -->
 
 <link href="https://fonts.googleapis.com/css?family=Nova+Mono" rel="stylesheet">
 
@@ -36,14 +35,6 @@ font-weight: bold;
 </style>
 
 <body>
-
-<script type="text/javascript">
-var noSleep = new NoSleep();
-
-/* function enableNoSleep() {
-  noSleep.enable(); //no effect on win phone :(
-} */
-</script>
 	
 <script type="text/javascript">
 function launchIntoFullscreen(element) {
@@ -97,7 +88,6 @@ var hours = ["ZWÖLF","EINS","ZWEI","DREI","VIER","FÜNF","SECHS","SIEBEN","ACHT
 function  highlight(s) {
   var start = alltext.indexOf(s);
   if (start == -1) return;
-  //console.log(s);
   for (var i = start; i < start + s.length; i++) {
   	$("#x" + i).toggleClass('clocktxt clocktxt2');
   }
@@ -106,7 +96,6 @@ function  highlight(s) {
 function  highlight2(s) {
   var start = alltext.lastIndexOf(s);
   if (start == -1) return;
-  //console.log(s);
   for (var i = start; i < start + s.length; i++) {
   	$("#x" + i).toggleClass('clocktxt clocktxt2');
   }
@@ -163,7 +152,6 @@ function drawclock(){
 $(document).ready(function(){
   $("#clockbox").click(function(){
 	  launchIntoFullscreen(document.documentElement);
-	  //enableNoSleep();
   });
   drawclock();
   setInterval(drawclock, 15000);
